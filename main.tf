@@ -51,12 +51,16 @@ resource "aws_autoscaling_group" "app_asg" {
   }
 }
 
+resource "aws_iam_service_linked_role" "app_ecs_cp_role" {
+  aws_service_name = "ecs.amazonaws.com"
+}
+
 resource "aws_ecs_capacity_provider" "app_ecs_cp" {
-  name = "${var.app_name}-ecs-cp"
+  name       = "${var.app_name}-ecs-cp"
+  depends_on = [aws_iam_service_linked_role.app_ecs_cp_role]
 
   auto_scaling_group_provider {
-    auto_scaling_group_arn         = aws_autoscaling_group.app_asg.arn
-    managed_termination_protection = "ENABLED"
+    auto_scaling_group_arn = aws_autoscaling_group.app_asg.arn
 
     managed_scaling {
       maximum_scaling_step_size = 1000
@@ -73,15 +77,14 @@ resource "aws_kms_key" "app_kms_key" {
 }
 
 resource "aws_cloudwatch_log_group" "app_log_group" {
-  name = "${var.app_name}-log-group"
+  name              = "${var.app_name}-log-group"
   retention_in_days = 14
-  kms_key_id = aws_kms_key.app_kms_key.id
 }
 
 resource "aws_ecs_cluster" "app_ecs_cluster" {
   name = "${var.app_name}-ecs-cluster"
 
-  capacity_providers = aws_ecs_capacity_provider.app_ecs_cp.id
+  capacity_providers = ["${aws_ecs_capacity_provider.app_ecs_cp.name}"]
 
   configuration {
     execute_command_configuration {
@@ -96,17 +99,6 @@ resource "aws_ecs_cluster" "app_ecs_cluster" {
   }
 }
 
-
-/*
-resource "aws_ecs_cluster" "app_ecs_cluster" {
-  name = "${var.app_name}-ecs-cluster"
-
-  setting {
-    name  = "containerInsights"
-    value = "enabled"
-  }
-}
-*/
 
 
 
