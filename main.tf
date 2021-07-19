@@ -2,7 +2,7 @@
 
 terraform {
   required_providers {
-    awscloud = {
+    aws = {
       source  = "hashicorp/aws"
       version = ">= 3.50.0"
     }
@@ -14,7 +14,7 @@ terraform {
 
 }
 
-provider "awscloud" {
+provider "aws" {
   region  = "us-east-1"
   profile = lookup(var.aws_profiles, var.deploy_env, "default")
 }
