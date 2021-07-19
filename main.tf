@@ -51,7 +51,50 @@ resource "aws_autoscaling_group" "app_asg" {
   }
 }
 
+resource "aws_ecs_capacity_provider" "app_ecs_cp" {
+  name = "${var.app_name}-ecs-cp"
 
+  auto_scaling_group_provider {
+    auto_scaling_group_arn         = aws_autoscaling_group.app_asg.arn
+    managed_termination_protection = "ENABLED"
+
+    managed_scaling {
+      maximum_scaling_step_size = 1000
+      minimum_scaling_step_size = 1
+      status                    = "ENABLED"
+      target_capacity           = 10
+    }
+  }
+}
+
+resource "aws_kms_key" "app_kms_key" {
+  description             = "Kms key for app ecs cluster"
+  deletion_window_in_days = 15
+}
+
+resource "aws_cloudwatch_log_group" "app_log_group" {
+  name = "${var.app_name}-log-group"
+  retention_in_days = 14
+  kms_key_id = aws_kms_key.app_kms_key.id
+}
+
+resource "aws_ecs_cluster" "app_ecs_cluster" {
+  name = "${var.app_name}-ecs-cluster"
+
+  capacity_providers = aws_ecs_capacity_provider.app_ecs_cp.id
+
+  configuration {
+    execute_command_configuration {
+      kms_key_id = aws_kms_key.app_kms_key.arn
+      logging    = "OVERRIDE"
+
+      log_configuration {
+        cloud_watch_encryption_enabled = true
+        cloud_watch_log_group_name     = aws_cloudwatch_log_group.app_log_group.name
+      }
+    }
+  }
+}
 
 
 /*
