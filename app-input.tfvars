@@ -1,9 +1,15 @@
 aws_profiles = {
-    "dev" = "devprofile"
-    "qa" = "qaprofile"
+  "dev" = "default"
+  "qa"  = "qaprofile"
 }
 deploy_env = "dev"
-app_name = "mypoetryapp"
+app_name   = "mypoetryapp"
+ec2_ami_id = {
+  "dev" = "ami-0747bdcabd34c712a"
+}
+
 ec2_instance_type = "t2.micro"
-ec2_key_name = "ec2-key-pair"
-security_groups = ["sg-5d735258"]
+ec2_key_name      = "ec2-key-pair"
+security_groups = {
+  "dev" = ["sg-5d735258"]
+}

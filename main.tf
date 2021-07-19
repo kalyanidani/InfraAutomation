@@ -1,34 +1,34 @@
-# --------- provider configuration -----------
+# --------- provider and backend configuration -----------
 
 terraform {
-    required_providers {
-        awscloud = {
-            source = "hashicorp/aws"
-            version = ">= 3.50.0"
-        }
+  required_providers {
+    awscloud = {
+      source  = "hashicorp/aws"
+      version = ">= 3.50.0"
     }
+  }
+
+  backend "s3" {
+
+  }
+
 }
 
 provider "awscloud" {
-    region = "us-east-1"
-    profile = lookup(var.aws_profiles, var.deploy_env, "default")
+  region  = "us-east-1"
+  profile = lookup(var.aws_profiles, var.deploy_env, "default")
 }
 
-# ------- backend configuration -------------
-
-backend "s3" {
-
-}
 
 # ------------- resources -------------------
 
 resource "aws_launch_configuration" "app_lc" {
   name          = "${var.app_name}-lc"
-  image_id      = lookup(var.ec2_ami_id,var.deploy_env)
+  image_id      = lookup(var.ec2_ami_id, var.deploy_env)
   instance_type = var.ec2_instance_type
   key_name      = var.ec2_key_name
 
-  security_groups = lookup(var.security_groups,var.deploy_env)
+  security_groups = lookup(var.security_groups, var.deploy_env)
 
   lifecycle {
     create_before_destroy = true
