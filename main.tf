@@ -62,12 +62,12 @@ resource "aws_ecs_capacity_provider" "app_ecs_cp" {
   auto_scaling_group_provider {
     auto_scaling_group_arn = aws_autoscaling_group.app_asg.arn
 
-    managed_scaling {
-      maximum_scaling_step_size = 1000
-      minimum_scaling_step_size = 1
-      status                    = "ENABLED"
-      target_capacity           = 10
-    }
+    #    managed_scaling {
+    #      maximum_scaling_step_size = 1000
+    #      minimum_scaling_step_size = 1
+    #      status                    = "ENABLED"
+    #      target_capacity           = 10
+    #    }
   }
 }
 
@@ -100,7 +100,7 @@ resource "aws_ecs_cluster" "app_ecs_cluster" {
 }
 
 resource "aws_ecs_task_definition" "app_ecs_task_defn" {
-  family = "service"
+  family                = "service"
   container_definitions = file("ecs/app-task-definition.json")
 
   # execution_role_arn = 
