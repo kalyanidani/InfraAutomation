@@ -36,13 +36,13 @@ resource "aws_launch_configuration" "app_lc" {
 }
 
 resource "aws_autoscaling_group" "app_asg" {
-  name                 = "${var.app_name}-asg"
-  launch_configuration = aws_launch_configuration.app_lc.id
-  min_size             = var.min_instances
-  max_size             = var.max_instances
-  desired_capacity     = var.desired_instances
+  name                      = "${var.app_name}-asg"
+  launch_configuration      = aws_launch_configuration.app_lc.id
+  min_size                  = var.min_instances
+  max_size                  = var.max_instances
+  desired_capacity          = var.desired_instances
   health_check_grace_period = 300
-  health_check_type         = "ELB"  
+  health_check_type         = "ELB"
 
   availability_zones = lookup(var.availability_zones, var.deploy_env)
 

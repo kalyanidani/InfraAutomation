@@ -50,3 +50,18 @@ variable "availability_zones" {
   type        = map(list(string))
   description = "List of availability zones for the instances to create in"
 }
+
+variable "min_instances" {
+  type    = number
+  default = 1
+}
+
+variable "max_instances" {
+  type    = number
+  default = 2
+}
+
+variable "desired_instances" {
+  type    = number
+  default = 1
+}
