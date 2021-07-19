@@ -13,3 +13,7 @@ ec2_key_name      = "ec2-key-pair"
 security_groups = {
   "dev" = ["sg-5d735258"]
 }
+
+availability_zones = {
+  "dev" = ["us-east-1a","us-east-1b"]
+}

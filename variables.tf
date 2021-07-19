@@ -19,6 +19,7 @@ variable "deploy_env" {
   }
 }
 
+# LC variables
 variable "app_name" {
   type        = string
   description = "ECS application name"
@@ -42,4 +43,10 @@ variable "ec2_key_name" {
 variable "security_groups" {
   type        = map(list(string))
   description = "Security group IDs to associate with infra"
+}
+
+# ASG variables
+variable "availability_zones" {
+  type        = map(list(string))
+  description = "List of availability zones for the instances to create in"
 }
