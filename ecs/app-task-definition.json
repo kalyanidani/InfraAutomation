@@ -1,0 +1,25 @@
+{
+    "name": "my-app",
+    "image": "busybox:latest",
+    "memory": 300,
+    "portMappings": [
+        {
+            "containerPort": 8000
+        }
+    ],
+    "essential": true,
+    "environment": [
+        {
+            "name": "NODE_ENV",
+            "value": "production"
+        }
+    ],
+    "logConfiguration": { 
+        "logDriver": "awslogs",
+        "options": { 
+           "awslogs-group" : "/ecs/fargate-task-definition",
+           "awslogs-region": "us-east-1",
+           "awslogs-stream-prefix": "ecs"
+        }
+    }
+}

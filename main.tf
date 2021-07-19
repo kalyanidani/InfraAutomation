@@ -99,6 +99,36 @@ resource "aws_ecs_cluster" "app_ecs_cluster" {
   }
 }
 
+resource "aws_ecs_task_definition" "app_ecs_task_defn" {
+  family = "service"
+  container_definitions = file("ecs/app-task-definition.json")
 
+  # execution_role_arn = 
+  # task_role_arn = 
+  network_mode = "bridge"
 
+}
+
+/*
+resource "aws_ecs_service" "app_service" {
+  name            = "${var.app_name}-svc"
+  cluster         = aws_ecs_cluster.app_ecs_cluster.id
+  task_definition = aws_ecs_task_definition.app_ecs_task_defn.arn
+  desired_count   = 1
+  #iam_role        = aws_iam_role.foo.arn
+  #depends_on      = [aws_iam_role_policy.foo]
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.foo.arn
+    container_name   = "my-app"
+    container_port   = 8000
+  }
+
+  placement_constraints {
+    type       = "memberOf"
+    expression = "attribute:ecs.availability-zone in [us-west-2a, us-west-2b]"
+  }
+}
+
+*/
 
