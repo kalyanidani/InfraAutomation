@@ -19,14 +19,46 @@ provider "aws" {
   profile = lookup(var.aws_profiles, var.deploy_env, "default")
 }
 
+# ------------- get ecs-optimized-ec2 ami --------------
+
+data "aws_ami" "ecs_optimized_ami" {
+  most_recent = true
+  owners = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["amzn-ami-*-amazon-ecs-optimized"]
+  }
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+}
+
+module "iam_role" {
+  source = "./aws-modules/iam-roles"
+
+  role_name = "${var.app_name}-role"
+  tags = local.common_tags
+  create_instance_profile = true
+}
+
+module "iam_role_attach" {
+  source = "./aws-modules/iam-roles-attachment"
+
+  for_each = var.policy_full_names
+  role_id = iam_role.role_id
+  policy_arn = each.key  
+}
 
 # ------------- resources -------------------
 
 resource "aws_launch_configuration" "app_lc" {
   name          = "${var.app_name}-lc"
-  image_id      = lookup(var.ec2_ami_id, var.deploy_env)
+#  image_id      = lookup(var.ec2_ami_id, var.deploy_env)
+  image_id    = data.aws_ami.ecs_optimized_ami.id
   instance_type = var.ec2_instance_type
   key_name      = var.ec2_key_name
+  iam_instance_profile = var.iam_instance_profile
 
   security_groups = lookup(var.security_groups, var.deploy_env)
 

@@ -25,11 +25,12 @@ variable "app_name" {
   description = "ECS application name"
 }
 
+/*
 variable "ec2_ami_id" {
   type        = map(string)
   description = "ec2 ami id"
 }
-
+*/
 variable "ec2_instance_type" {
   type        = string
   description = "EC2 instance type"
@@ -43,6 +44,11 @@ variable "ec2_key_name" {
 variable "security_groups" {
   type        = map(list(string))
   description = "Security group IDs to associate with infra"
+}
+
+variable "iam_instance_profile" {
+  type = string
+  description = "Name of the iam_instance_profile to attach LC instances"
 }
 
 # ASG variables
@@ -65,3 +71,4 @@ variable "desired_instances" {
   type    = number
   default = 1
 }
+

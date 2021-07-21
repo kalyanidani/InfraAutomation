@@ -1,7 +1,7 @@
 [
  { 
-    "name": "my-app",
-    "image": "busybox:latest",
+    "name": "myapp",
+    "image": "450799241906.dkr.ecr.us-east-1.amazonaws.com/webapp:v1.0",
     "memory": 300,
     "portMappings": [
         {
@@ -11,8 +11,8 @@
     "essential": true,
     "environment": [
         {
-            "name": "NODE_ENV",
-            "value": "production"
+            "name": "BUILD_ENV",
+            "value": "dev"
         }
     ],
     "logConfiguration": { 

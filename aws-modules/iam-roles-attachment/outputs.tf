@@ -1,0 +1,1 @@
+# No attributes exported by aws_iam_role_policy_attachment resource.

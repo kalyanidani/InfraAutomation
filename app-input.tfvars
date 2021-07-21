@@ -4,9 +4,11 @@ aws_profiles = {
 }
 deploy_env = "dev"
 app_name   = "mypoetryapp"
+/*
 ec2_ami_id = {
   "dev" = "ami-0747bdcabd34c712a"
 }
+*/
 
 ec2_instance_type = "t2.micro"
 ec2_key_name      = "ec2-key-pair"
