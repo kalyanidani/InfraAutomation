@@ -19,3 +19,6 @@ security_groups = {
 availability_zones = {
   "dev" = ["us-east-1a", "us-east-1b"]
 }
+
+
+policy_full_names = ["policy/service-role/AmazonEC2ContainerServiceforEC2Role", "policy/AmazonSSMManagedInstanceCore", "policy/CloudWatchLogsFullAccess"]

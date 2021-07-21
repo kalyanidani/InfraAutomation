@@ -23,7 +23,7 @@ provider "aws" {
 
 data "aws_ami" "ecs_optimized_ami" {
   most_recent = true
-  owners = ["amazon"]
+  owners      = ["amazon"]
   filter {
     name   = "name"
     values = ["amzn-ami-*-amazon-ecs-optimized"]
@@ -34,31 +34,43 @@ data "aws_ami" "ecs_optimized_ami" {
   }
 }
 
+data "aws_partition" "current" {}
+
+# ----------- common tags -----------------
+
+locals {
+  common_tags = {
+    App      = var.app_name
+    Env      = var.deploy_env
+    App_type = "microservice"
+  }
+}
+
 module "iam_role" {
   source = "./aws-modules/iam-roles"
 
-  role_name = "${var.app_name}-role"
-  tags = local.common_tags
+  role_name               = "${var.app_name}-role"
+  tags                    = local.common_tags
   create_instance_profile = true
 }
 
 module "iam_role_attach" {
   source = "./aws-modules/iam-roles-attachment"
 
-  for_each = var.policy_full_names
-  role_id = iam_role.role_id
-  policy_arn = each.key  
+  for_each   = var.policy_full_names
+  role_id    = module.iam_role.role_id
+  policy_arn = "arn:${data.aws_partition.current.partition}:iam::aws:${each.key}"
 }
 
 # ------------- resources -------------------
 
 resource "aws_launch_configuration" "app_lc" {
-  name          = "${var.app_name}-lc"
-#  image_id      = lookup(var.ec2_ami_id, var.deploy_env)
-  image_id    = data.aws_ami.ecs_optimized_ami.id
-  instance_type = var.ec2_instance_type
-  key_name      = var.ec2_key_name
-  iam_instance_profile = var.iam_instance_profile
+  name = "${var.app_name}-lc"
+  #  image_id      = lookup(var.ec2_ami_id, var.deploy_env)
+  image_id             = data.aws_ami.ecs_optimized_ami.id
+  instance_type        = var.ec2_instance_type
+  key_name             = var.ec2_key_name
+  iam_instance_profile = module.iam_role.instance_profile_id[0]
 
   security_groups = lookup(var.security_groups, var.deploy_env)
 

@@ -46,10 +46,6 @@ variable "security_groups" {
   description = "Security group IDs to associate with infra"
 }
 
-variable "iam_instance_profile" {
-  type = string
-  description = "Name of the iam_instance_profile to attach LC instances"
-}
 
 # ASG variables
 variable "availability_zones" {
@@ -70,5 +66,10 @@ variable "max_instances" {
 variable "desired_instances" {
   type    = number
   default = 1
+}
+
+variable "policy_full_names" {
+  type        = set(string)
+  description = "Set of all policy ARN sub part"
 }
 
