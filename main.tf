@@ -62,22 +62,19 @@ module "iam_role_attach" {
   policy_arn = "arn:${data.aws_partition.current.partition}:iam::aws:${each.key}"
 }
 
-# ------------- resources -------------------
+module "launch_config" {
+  source = "./aws-modules/launch-config"
 
-resource "aws_launch_configuration" "app_lc" {
-  name = "${var.app_name}-lc"
-  #  image_id      = lookup(var.ec2_ami_id, var.deploy_env)
-  image_id             = data.aws_ami.ecs_optimized_ami.id
-  instance_type        = var.ec2_instance_type
-  key_name             = var.ec2_key_name
+  lc_name = "${var.app_name}-lc"
+  image_id = data.aws_ami.ecs_optimized_ami.id
+  instance_type = var.ec2_instance_type
+  key_name = var.ec2_key_name
   iam_instance_profile = module.iam_role.instance_profile_id[0]
-
   security_groups = lookup(var.security_groups, var.deploy_env)
 
-  lifecycle {
-    create_before_destroy = true
-  }
 }
+
+# ------------- resources -------------------
 
 resource "aws_autoscaling_group" "app_asg" {
   name                      = "${var.app_name}-asg"
