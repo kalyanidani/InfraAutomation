@@ -12,6 +12,8 @@ ENV PYTHONUNBUFFERED=1 \
 ENV APP_HOME /app
 ENV RUN_MIGRATIONS yes
 
+ENV DJANGO_SUPERUSER_PASSWORD dummypassword
+
 RUN apt-get update && \
         apt-get install -y curl build-essential &&\
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
@@ -36,5 +38,4 @@ EXPOSE 8000
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 
-CMD ["poetry","run","python","manage.py","runserver"]
-
+CMD ["poetry","run","python","manage.py","runserver","0.0.0.0:8000"]
