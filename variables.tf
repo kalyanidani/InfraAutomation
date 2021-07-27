@@ -32,6 +32,6 @@ variable "ec2_key_name" {
 }
 
 variable "availability_zones" {
-  type = map(list(string))
+  type        = map(list(string))
   description = "List of availability zones needed for asg"
 }

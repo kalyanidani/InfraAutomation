@@ -14,5 +14,4 @@ resource "aws_autoscaling_group" "this" {
     create_before_destroy = true
   }
 
-  tags = var.tags
 }
