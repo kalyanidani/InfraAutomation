@@ -22,8 +22,8 @@ provider "aws" {
 
 locals {
   common_tags = {
-      environment = var.deploy_env
-      app_stack = var.app_name
+    environment = var.deploy_env
+    app_stack   = var.app_name
   }
 }
 #-------------- data sources ----------------
@@ -32,40 +32,40 @@ locals {
 #-------------- ecs cluster create ----------------
 
 module "ecs_cluster" {
-    source = "./aws-modules/ecs-cluster"
-    cluster_name = "${var.app_name}-ecs-cluster"
+  source       = "./aws-modules/ecs-cluster"
+  cluster_name = "${var.app_name}-ecs-cluster"
 }
 
 module "alb_security_group" {
-    source = "./aws-modules/security-group"
-    security_group_name = "${var.app_name}-lb-sg"
-    security_group_desc = "SG to allow internet incoming traffic at port 80 for ALB"
-    sec_vpc_id = lookup(var.vpc_id, var.deploy_env)
-    tags = locals.common_tags
+  source              = "./aws-modules/security-group"
+  security_group_name = "${var.app_name}-lb-sg"
+  security_group_desc = "SG to allow internet incoming traffic at port 80 for ALB"
+  sec_vpc_id          = lookup(var.vpc_id, var.deploy_env)
+  tags                = local.common_tags
 }
 
 resource "aws_security_group_rule" "alb_sg_ingress" {
   type              = "ingress"
-  from_port         = 0
+  from_port         = 80
   to_port           = 80
-  protocol          = "HTTP"  
-  cidr_blocks       = ["0.0.0.0"]
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = module.alb_security_group.security_group_id
 }
 
 module "container_instance_security_group" {
-    source = "./aws-modules/security-group"
-    security_group_name = "${var.app_name}-ci-sg"
-    security_group_desc = "SG to allow traffic from ALB to container instances"
-    sec_vpc_id = lookup(var.vpc_id, var.deploy_env)
-    tags = locals.common_tags
+  source              = "./aws-modules/security-group"
+  security_group_name = "${var.app_name}-ci-sg"
+  security_group_desc = "SG to allow traffic from ALB to container instances"
+  sec_vpc_id          = lookup(var.vpc_id, var.deploy_env)
+  tags                = local.common_tags
 }
 
 resource "aws_security_group_rule" "ci_sg_ingress" {
-  type              = "ingress"
-  from_port         = 0
-  to_port           = "35000-65500"
-  protocol          = "TCP"  
-  source_security_group_id       = module.alb_security_group.security_group_id 
-  security_group_id = module.container_instance_security_group.security_group_id
+  type                     = "ingress"
+  from_port                = 35000
+  to_port                  = 65000
+  protocol                 = "TCP"
+  source_security_group_id = module.alb_security_group.security_group_id
+  security_group_id        = module.container_instance_security_group.security_group_id
 }

@@ -1,12 +1,10 @@
-
-
 variable "app_name" {
-    type = string
-    description = "Application short name"  
+  type        = string
+  description = "Application short name"
 }
 
 variable "deploy_env" {
-    type        = string
+  type        = string
   description = "SDLC env for deploying the ecs cluster"
   validation {
     condition     = contains(["dev", "qa", "stage", "prod"], var.deploy_env)
@@ -14,7 +12,12 @@ variable "deploy_env" {
   }
 }
 
-aws_profiles = {
-  "dev" = "default"
-  "qa"  = "qaprofile"
+variable "vpc_id" {
+  type = map(string)
 }
+
+variable "aws_profiles" {
+  type        = map(string)
+  description = "AWS env profile for deployment"
+}
+

@@ -4,16 +4,16 @@ variable "cluster_name" {
 }
 
 variable "enable_container_insights" {
-    type = bool
-    description = "Boolean to enable or disable container insights"
-    default = true
+    type = string
+    description = "Condition to enable or disable container insights"
+    default = "enabled"
 }
 
 resource "aws_ecs_cluster" "this" {
   name = var.cluster_name
 
   setting {
-      name = containerInsights
+      name = "containerInsights"
       value = var.enable_container_insights
   } 
 }
