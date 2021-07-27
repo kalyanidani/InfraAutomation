@@ -21,3 +21,12 @@ variable "aws_profiles" {
   description = "AWS env profile for deployment"
 }
 
+variable "ec2_instance_type" {
+  type        = string
+  description = "EC2 instance type"
+}
+
+variable "ec2_key_name" {
+  type        = string
+  description = "EC2 key anme for login to instance"
+}

@@ -7,18 +7,14 @@ terraform {
       version = ">= 3.50.0"
     }
   }
-
   backend "s3" {
-
   }
-
 }
 
 provider "aws" {
   region  = "us-east-1"
   profile = lookup(var.aws_profiles, var.deploy_env, "default")
 }
-
 
 locals {
   common_tags = {
@@ -27,9 +23,32 @@ locals {
   }
 }
 #-------------- data sources ----------------
-
+data "aws_ssm_parameter" "ecs_ami" {
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+}
 
 #-------------- ecs cluster create ----------------
+module "iam_ecs_role" {
+  source = "./aws-modules/iam-ecs-role"
+  role_name = "${var.app_name}-iam-ecs-role"
+  create_instance_profile = true
+  tags = local.common_tags
+}
+
+resource "aws_iam_role_policy_attachment" "ec2_service_role" {
+  role       = module.iam_ecs_role.role_id
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
+
+module "launch_config" {
+  source = "./aws-modules/launch-config"
+  lc_name = "${var.app_name}-lc"
+  image_id = data.aws_ssm_parameter.ecs_ami.value
+  ec2_instance_type = var.ec2_instance_type
+  ec2_key_name = var.ec2_key_name
+  iam_instance_profile = module.iam_ecs_role.instance_profile_id
+  security_groups = [module.container_instance_security_group.security_group_id]
+}
 
 module "ecs_cluster" {
   source       = "./aws-modules/ecs-cluster"
