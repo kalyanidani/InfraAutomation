@@ -51,6 +51,17 @@ module "launch_config" {
   security_groups      = [module.container_instance_security_group.security_group_id]
 }
 
+module "asg" {
+  source = "./aws-modules/asg"
+  asg_name = "${var.app_name}-asg"
+  lc_id = module.launch_config.lc_id
+  min_instances = 1
+  max_instances = 1
+  desired_instances = 1
+  availability_zones = lookup(var.availability_zones, var.deploy_env)
+  tags = local.common_tags
+}
+
 module "ecs_cluster" {
   source       = "./aws-modules/ecs-cluster"
   cluster_name = "${var.app_name}-ecs-cluster"
