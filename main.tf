@@ -29,10 +29,10 @@ data "aws_ssm_parameter" "ecs_ami" {
 
 #-------------- ecs cluster create ----------------
 module "iam_ecs_role" {
-  source = "./aws-modules/iam-ecs-role"
-  role_name = "${var.app_name}-iam-ecs-role"
+  source                  = "./aws-modules/iam-ecs-role"
+  role_name               = "${var.app_name}-ecsrole"
   create_instance_profile = true
-  tags = local.common_tags
+  tags                    = local.common_tags
 }
 
 resource "aws_iam_role_policy_attachment" "ec2_service_role" {
@@ -41,13 +41,14 @@ resource "aws_iam_role_policy_attachment" "ec2_service_role" {
 }
 
 module "launch_config" {
-  source = "./aws-modules/launch-config"
-  lc_name = "${var.app_name}-lc"
-  image_id = data.aws_ssm_parameter.ecs_ami.value
+  source            = "./aws-modules/launch-config"
+  lc_name           = "${var.app_name}-lc"
+  image_id          = data.aws_ssm_parameter.ecs_ami.value
   ec2_instance_type = var.ec2_instance_type
-  ec2_key_name = var.ec2_key_name
-  iam_instance_profile = module.iam_ecs_role.instance_profile_id
-  security_groups = [module.container_instance_security_group.security_group_id]
+  ec2_key_name      = var.ec2_key_name
+  # iam_instance_profile = module.iam_ecs_role.instance_profile_id
+  iam_instance_profile = "${var.app_name}-ecsrole-instance-profile"
+  security_groups      = [module.container_instance_security_group.security_group_id]
 }
 
 module "ecs_cluster" {
