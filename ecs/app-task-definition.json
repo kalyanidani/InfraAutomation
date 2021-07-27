@@ -1,7 +1,7 @@
 [
  { 
     "name": "myapp",
-    "image": "450799241906.dkr.ecr.us-east-1.amazonaws.com/webapp:v1.0",
+    "image": "450799241906.dkr.ecr.us-east-1.amazonaws.com/webapp:v2.0",
     "memory": 300,
     "portMappings": [
         {
@@ -11,14 +11,14 @@
     "essential": true,
     "environment": [
         {
-            "name": "BUILD_ENV",
-            "value": "dev"
+            "name": "DJANGO_SUPERUSER_PASSWORD",
+            "value": "password"
         }
     ],
     "logConfiguration": { 
         "logDriver": "awslogs",
         "options": { 
-           "awslogs-group" : "/ecs/fargate-task-definition",
+           "awslogs-group" : "myapp-ecs-log-group",
            "awslogs-region": "us-east-1",
            "awslogs-stream-prefix": "ecs"
         }
