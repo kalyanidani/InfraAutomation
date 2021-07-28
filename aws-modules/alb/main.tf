@@ -25,5 +25,14 @@ resource "aws_lb_listener" "this" {
   }
 }
 
+resource "aws_lb_target_group" "this" {
+  name        = var.tg_name
+  port        = var.tg_port
+  protocol    = var.tg_protocol
+  target_type = var.target_type
+  vpc_id      = var.vpc_id
+  tags        = var.tags
+}
+
 
 

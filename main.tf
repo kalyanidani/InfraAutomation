@@ -143,6 +143,9 @@ module "alb" {
   alb_listener_protocol = var.alb_listener_protocol
 
   alb_listener_default_response = var.alb_listener_default_response
+
+  tg_name = "${var.app_name}-tg"
+  vpc_id = var.vpc_id
 }
 
 /*

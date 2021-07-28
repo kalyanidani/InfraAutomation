@@ -45,5 +45,27 @@ variable "alb_listener_default_response" {
     description = "Fixed response (default) string for listener"
 }
 
+variable "tg_name" {
+    type = string
+}
+
+variable "tg_port" {
+    type = number
+    default = 80
+}
+
+variable "tg_protocol" {
+    type = string
+    default = "HTTP"
+}
+
+variable "target_type" {
+    type = string
+    default ="ip"
+}
+
+variable "vpc_id" {
+    type = string
+}
 
 
