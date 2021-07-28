@@ -61,3 +61,17 @@ variable "alb_listener_protocol" {
 variable "alb_listener_default_response" {
   type = string
 }
+
+variable "tasks_desired_count" {
+  type = number
+  default = 1
+}
+
+# To remove once ecs role creation added 
+variable "ecs_iam_role_arn" {
+  type = string
+}
+
+variable "app_port" {
+  type = number
+}
