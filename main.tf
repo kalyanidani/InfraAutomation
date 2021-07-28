@@ -145,7 +145,7 @@ module "alb" {
   alb_listener_default_response = var.alb_listener_default_response
 
   tg_name = "${var.app_name}-tg"
-  vpc_id = var.vpc_id
+  vpc_id  = lookup(var.vpc_id, var.deploy_env)
 }
 
 /*

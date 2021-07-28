@@ -61,7 +61,7 @@ variable "tg_protocol" {
 
 variable "target_type" {
     type = string
-    default ="ip"
+    default = "instance"
 }
 
 variable "vpc_id" {
