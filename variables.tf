@@ -37,7 +37,7 @@ variable "availability_zones" {
 }
 
 variable "container_def_file_path" {
-  type = string
-  description = "Path of the container definition json file"  
+  type        = string
+  description = "Path of the container definition json file"
 }
 
