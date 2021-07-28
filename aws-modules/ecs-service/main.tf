@@ -5,8 +5,8 @@ variable "des_count" { type = number }
 variable "iam_role_arn" { type = string }
 
 variable "target_group_arn" { type = string }
-variable "container_name" { type = number }
-variable "container_port" { type = string }
+variable "container_name" { type = string }
+variable "container_port" { type = number }
 variable "tags" { type = map(string) }
 
 resource "aws_ecs_service" "this" {

@@ -1,4 +1,4 @@
-app_name   = "myapp"
+app_name = "myapp"
 
 deploy_env = "dev"
 vpc_id = {
@@ -18,10 +18,10 @@ availability_zones = {
 container_def_file_path = "ecs/app-task-definition.json"
 ec2_user_data_file_path = "ecs/ec2_instantiation.sh"
 
-alb_subnet_ids = ["subnet-020d014f", "subnet-ebdea0b4"]
-alb_listener_port = 80
-alb_listener_protocol = "HTTP"
+alb_subnet_ids                = ["subnet-020d014f", "subnet-ebdea0b4"]
+alb_listener_port             = 80
+alb_listener_protocol         = "HTTP"
 alb_listener_default_response = "Reply from server: Welcome to default listener hit"
 
 ecs_iam_role_arn = "arn:aws:iam::450799241906:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
-app_port = 8000
+app_port         = 8000

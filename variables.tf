@@ -63,7 +63,7 @@ variable "alb_listener_default_response" {
 }
 
 variable "tasks_desired_count" {
-  type = number
+  type    = number
   default = 1
 }
 

@@ -148,20 +148,23 @@ module "alb" {
   vpc_id  = lookup(var.vpc_id, var.deploy_env)
 }
 
+/*
 module "ecs_service" {
-  service_name  = "${var.app_name}-ecs-service"
+
+  source         = "./aws-modules/ecs-service"
+  service_name   = "${var.app_name}-ecs-service"
   ecs_cluster_id = module.ecs_cluster.cluster_id
-  task_def_arn = module.task_definition.task_definition_arn
-  des_count   = var.tasks_desired_count
-  iam_role_arn = var.ecs_iam_role_arn
+  task_def_arn   = module.task_definition.task_definition_arn
+  des_count      = var.tasks_desired_count
+  iam_role_arn   = var.ecs_iam_role_arn
 
   target_group_arn = module.alb.alb_tg_arn
-  container_name = var.app_name
+  container_name   = var.app_name
   container_port   = var.app_port
-  }
 
-  tags = var.tags
+  tags = local.common_tags
 }
+*/
 
 /*
 In spite of explicit dependency specified, for_each still needs values pre populated before apply.
