@@ -32,3 +32,8 @@ variable "ec2_user_data" {
     type = string
     description = "File path containing user_data ec2 instantiation" 
 }
+
+variable "ecs_cluster_name" {
+type = string
+}
+

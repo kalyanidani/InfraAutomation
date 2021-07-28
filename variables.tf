@@ -42,6 +42,6 @@ variable "container_def_file_path" {
 }
 
 variable "ec2_user_data_file_path" {
-  type = string
+  type        = string
   description = "Path of the ec2 instantiation user_data"
 }
