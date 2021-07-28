@@ -36,9 +36,8 @@ variable "availability_zones" {
   description = "List of availability zones needed for asg"
 }
 
-variable "task_def_file_path" {
+variable "container_def_file_path" {
   type = string
   description = "Path of the container definition json file"  
 }
 
-../ecs/app-task-definition.json

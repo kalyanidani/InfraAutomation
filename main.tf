@@ -123,7 +123,7 @@ resource "aws_security_group_rule" "ci_sg_egress" {
 
 module "task_definition" {
   task_definition_name = "${var.app_name}-taskdefinition"
-  container_def_json = var.task_def_file_path
+  container_def_json = var.container_def_file_path
   tags = local.common_tags
 }
 
