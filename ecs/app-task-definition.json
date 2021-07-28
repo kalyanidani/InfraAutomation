@@ -14,14 +14,6 @@
             "name": "DJANGO_SUPERUSER_PASSWORD",
             "value": "password"
         }
-    ],
-    "logConfiguration": { 
-        "logDriver": "awslogs",
-        "options": { 
-           "awslogs-group" : "myapp-ecs-log-group",
-           "awslogs-region": "us-east-1",
-           "awslogs-stream-prefix": "ecs"
-        }
-    }
+    ]
  }
 ]

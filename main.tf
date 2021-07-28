@@ -121,6 +121,11 @@ resource "aws_security_group_rule" "ci_sg_egress" {
   security_group_id = module.container_instance_security_group.security_group_id
 }
 
+module "task_definition" {
+  task_definition_name = "${var.app_name}-taskdefinition"
+  container_def_json = var.task_def_file_path
+  tags = local.common_tags
+}
 
 /*
 In spite of explicit dependency specified, for_each still needs values pre populated before apply.

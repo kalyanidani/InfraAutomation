@@ -14,3 +14,5 @@ ec2_key_name      = "ec2-key-pair"
 availability_zones = {
   "dev" = ["us-east-1a", "us-east-1b"]
 }
+
+task_def_file_path = "../ecs/app-task-definition.json"
