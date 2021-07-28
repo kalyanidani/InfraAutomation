@@ -55,9 +55,9 @@ variable "alb_listener_port" {
 }
 
 variable "alb_listener_protocol" {
-  type = string  
+  type = string
 }
 
 variable "alb_listener_default_response" {
-  type = string  
+  type = string
 }

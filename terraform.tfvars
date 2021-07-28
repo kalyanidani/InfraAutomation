@@ -19,7 +19,7 @@ container_def_file_path = "ecs/app-task-definition.json"
 
 ec2_user_data_file_path = "ecs/ec2_instantiation.sh"
 
-alb_subnet_ids = ["subnet-020d014f","subnet-ebdea0b4"]
+alb_subnet_ids = ["subnet-020d014f", "subnet-ebdea0b4"]
 
 alb_listener_port = 80
 

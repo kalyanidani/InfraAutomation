@@ -17,7 +17,11 @@ resource "aws_lb_listener" "this" {
 
   default_action {
     type             = "fixed-response"
-    fixed-response   = var.alb_listener_default_response
+    fixed_response {
+	content_type = "text/plain"
+	message_body = var.alb_listener_default_response
+	status_code = 200
+    }
   }
 }
 

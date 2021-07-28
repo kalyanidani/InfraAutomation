@@ -133,13 +133,13 @@ module "task_definition" {
 }
 
 module "alb" {
-  source = "./aws-modules/alb"
-  alb_name = "${var.app_name}-alb"
+  source              = "./aws-modules/alb"
+  alb_name            = "${var.app_name}-alb"
   alb_security_groups = [module.alb_security_group.security_group_id]
-  alb_subnet_ids = var.alb_subnet_ids
-  tags = local.common_tags
+  alb_subnet_ids      = var.alb_subnet_ids
+  tags                = local.common_tags
 
-  alb_listener_port = var.alb_listener_port
+  alb_listener_port     = var.alb_listener_port
   alb_listener_protocol = var.alb_listener_protocol
 
   alb_listener_default_response = var.alb_listener_default_response
