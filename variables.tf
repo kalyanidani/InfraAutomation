@@ -41,3 +41,7 @@ variable "container_def_file_path" {
   description = "Path of the container definition json file"
 }
 
+variable "ec2_user_data_file_path" {
+  type = string
+  description = "Path of the ec2 instantiation user_data"
+}

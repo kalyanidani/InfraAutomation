@@ -27,3 +27,8 @@ variable "security_groups" {
     type = list(string)
     description = "List of security groups to attach to ec2"
 }
+
+variable "ec2_user_data" {
+    type = string
+    description = "File path containing user_data ec2 instantiation" 
+}

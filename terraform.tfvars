@@ -16,3 +16,5 @@ availability_zones = {
 }
 
 container_def_file_path = "ecs/app-task-definition.json"
+
+ec2_user_data_file_path = "ecs/ec2_instantiation.sh"
