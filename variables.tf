@@ -45,3 +45,19 @@ variable "ec2_user_data_file_path" {
   type        = string
   description = "Path of the ec2 instantiation user_data"
 }
+
+variable "alb_subnet_ids" {
+  type = list(string)
+}
+
+variable "alb_listener_port" {
+  type = number
+}
+
+variable "alb_listener_protocol" {
+  type = string  
+}
+
+variable "alb_listener_default_response" {
+  type = string  
+}

@@ -132,6 +132,19 @@ module "task_definition" {
   tags                 = local.common_tags
 }
 
+module "alb" {
+  source = "./aws-modules/alb"
+  alb_name = "${var.app_name}-alb"
+  alb_security_groups = [module.alb_security_group.security_group_id]
+  alb_subnet_ids = var.alb_subnet_ids
+  tags = local.common_tags
+
+  alb_listener_port = var.alb_listener_port
+  alb_listener_protocol = var.alb_listener_protocol
+
+  alb_listener_default_response = var.alb_listener_default_response
+}
+
 /*
 In spite of explicit dependency specified, for_each still needs values pre populated before apply.
 The "for_each" value depends on resource attributes that cannot be determined until apply, so Terraform cannot predict how many instances will be created. To work around this, use

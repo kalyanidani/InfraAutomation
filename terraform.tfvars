@@ -18,3 +18,11 @@ availability_zones = {
 container_def_file_path = "ecs/app-task-definition.json"
 
 ec2_user_data_file_path = "ecs/ec2_instantiation.sh"
+
+alb_subnet_ids = ["subnet-020d014f","subnet-ebdea0b4"]
+
+alb_listener_port = 80
+
+alb_listener_protocol = "HTTP"
+
+alb_listener_default_response = "Reply from server: Welcome to default listener hit"
