@@ -43,7 +43,7 @@ resource "aws_lb_listener_rule" "this" {
   }
 
   condition {
-    path_patttern {
+    path_pattern {
       values = var.lb_path_pattern_list
     }
   }
