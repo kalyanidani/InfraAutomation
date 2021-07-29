@@ -1,7 +1,7 @@
 [
  { 
     "name": "myapp",
-    "image": "xxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/webapp:v2.0",
+    "image": "450799241906.dkr.ecr.us-east-1.amazonaws.com/webapp:v2.0",
     "memory": 300,
     "portMappings": [
         {
