@@ -49,3 +49,19 @@ resource "aws_lb_listener_rule" "this" {
   }
 }
 
+/*
+resource "aws_lb_listener" "secure" {
+  load_balancer_arn = aws_lb.this.arn
+  port              = var.alb_listener_port
+  protocol          = var.alb_listener_protocol
+  ssl_policy        = var.alb_security_policy
+  certificate_arn   = var.alb_secure_certificate_arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.this.arn
+  }
+}
+*/
+
+

@@ -73,3 +73,13 @@ variable "lb_path_pattern_list" {
     default = ["/*"]
 }
 
+/*
+variable "alb_security_policy" {
+  type = string
+  default = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
+}
+
+variable "alb_secure_certificate_arn" {
+  type = string
+}
+*/
