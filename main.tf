@@ -115,6 +115,10 @@ resource "aws_security_group_rule" "ci_sg_ingress" {
   security_group_id        = module.container_instance_security_group.security_group_id
 }
 
+/* To do: Have single egress rule resource included in module,
+and call the same module for both alb_sg_egress and ci_sg_egress
+*/
+
 resource "aws_security_group_rule" "ci_sg_egress" {
   type              = "egress"
   description       = "allow all outbound traffic"
@@ -164,23 +168,3 @@ module "ecs_service" {
 
   tags = local.common_tags
 }
-
-
-/*
-In spite of explicit dependency specified, for_each still needs values pre populated before apply.
-The "for_each" value depends on resource attributes that cannot be determined until apply, so Terraform cannot predict how many instances will be created. To work around this, use
-│ the -target argument to first apply only the resources that the for_each depends on.
-Thus, creating separte egress rule
-resource "aws_security_group_rule" "sg_egress" {
-  for_each          = toset([module.alb_security_group.security_group_id, module.container_instance_security_group.security_group_id])
-  type              = "egress"
-  description       = "allow all outbound traffic"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = each.key
-
-#  depends_on = [module.alb_security_group, module.container_instance_security_group]
-}
-*/
