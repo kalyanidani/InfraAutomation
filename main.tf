@@ -41,15 +41,15 @@ resource "aws_iam_role_policy_attachment" "ec2_service_role" {
 }
 
 module "launch_config" {
-  source            = "./aws-modules/launch-config"
-  lc_name           = "${var.app_name}-lc"
-  image_id          = data.aws_ssm_parameter.ecs_ami.value
-  ec2_instance_type = var.ec2_instance_type
-  ec2_key_name      = var.ec2_key_name
-  # iam_instance_profile = module.iam_ecs_role.instance_profile_id
-  iam_instance_profile = "${var.app_name}-ecsrole-instance-profile"
-  security_groups      = [module.container_instance_security_group.security_group_id]
-  ec2_user_data        = "${path.module}/${var.ec2_user_data_file_path}"
+  source               = "./aws-modules/launch-config"
+  lc_name              = "${var.app_name}-lc"
+  image_id             = data.aws_ssm_parameter.ecs_ami.value
+  ec2_instance_type    = var.ec2_instance_type
+  ec2_key_name         = var.ec2_key_name
+  iam_instance_profile = module.iam_ecs_role.instance_profile_id[0]
+  #iam_instance_profile = "${var.app_name}-ecsrole-instance-profile"
+  security_groups = [module.container_instance_security_group.security_group_id]
+  ec2_user_data   = "${path.module}/${var.ec2_user_data_file_path}"
 
   ecs_cluster_name = "${var.app_name}-ecs-cluster"
   depends_on       = [module.ecs_cluster]
