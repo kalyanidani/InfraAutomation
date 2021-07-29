@@ -68,4 +68,8 @@ variable "vpc_id" {
     type = string
 }
 
+variable "lb_path_pattern_list" {
+    type = list(string)
+    default = ["/*"]
+}
 

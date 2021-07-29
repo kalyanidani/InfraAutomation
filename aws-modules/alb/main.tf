@@ -34,5 +34,18 @@ resource "aws_lb_target_group" "this" {
   tags        = var.tags
 }
 
+resource "aws_lb_listener_rule" "this" {
+  listener_arn = aws_lb_listener.this.arn
 
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.this.arn
+  }
+
+  condition {
+    path_patttern {
+      values = var.lb_path_pattern_list
+    }
+  }
+}
 
