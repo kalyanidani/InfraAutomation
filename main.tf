@@ -148,7 +148,7 @@ module "alb" {
   vpc_id  = lookup(var.vpc_id, var.deploy_env)
 }
 
-/*
+
 module "ecs_service" {
 
   source         = "./aws-modules/ecs-service"
@@ -164,7 +164,7 @@ module "ecs_service" {
 
   tags = local.common_tags
 }
-*/
+
 
 /*
 In spite of explicit dependency specified, for_each still needs values pre populated before apply.
