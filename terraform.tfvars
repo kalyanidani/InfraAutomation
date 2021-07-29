@@ -1,4 +1,4 @@
-app_name = "myapp"
+app_name   = "myapp"
 deploy_env = "dev"
 vpc_id = {
   "dev" = "vpc-ce941db3"
